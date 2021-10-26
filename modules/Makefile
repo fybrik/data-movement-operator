@@ -21,6 +21,7 @@ helm-uninstall:
 # Tests if implicit copy definitions can be installed
 .PHONY: test
 test:
+	$(TOOLBIN)/kubectl apply -f https://raw.githubusercontent.com/fybrik/fybrik/master/charts/fybrik-crd/templates/app.fybrik.io_fybrikmodules.yaml
 	$(TOOLBIN)/kubectl apply -f implicit-copy-batch-module.yaml
 	$(TOOLBIN)/kubectl apply -f implicit-copy-stream-module.yaml
 	$(TOOLBIN)/kubectl delete -f implicit-copy-batch-module.yaml

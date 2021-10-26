@@ -77,15 +77,15 @@ docker-build:
 .PHONY: docker-push
 docker-push:
 	$(MAKE) -C manager docker-push
-	$(MAKE) -C test/dummy-mover docker-push
+	#$(MAKE) -C test/dummy-mover docker-push # Deactivate dummy-mover for now until it's removed from fybrik main repository
 
 DOCKER_PUBLIC_HOSTNAME ?= ghcr.io
 DOCKER_PUBLIC_NAMESPACE ?= fybrik
 DOCKER_PUBLIC_TAGNAME ?= master
 
 DOCKER_PUBLIC_NAMES := \
-	manager \
-	dummy-mover
+	dmo-manager
+#	dummy-mover # Deactivate dummy-mover for now until it's removed from fybrik main repository
 
 define do-docker-retag-and-push-public
 	for name in ${DOCKER_PUBLIC_NAMES}; do \
@@ -104,7 +104,7 @@ helm-push-public:
 
 .PHONY: save-images
 save-images:
-	docker save -o images.tar ${DOCKER_HOSTNAME}/${DOCKER_NAMESPACE}/manager:${DOCKER_TAGNAME} \
+	docker save -o images.tar ${DOCKER_HOSTNAME}/${DOCKER_NAMESPACE}/dmo-manager:${DOCKER_TAGNAME} \
 		${DOCKER_HOSTNAME}/${DOCKER_NAMESPACE}/dummy-mover:${DOCKER_TAGNAME}
 
 include hack/make-rules/tools.mk
