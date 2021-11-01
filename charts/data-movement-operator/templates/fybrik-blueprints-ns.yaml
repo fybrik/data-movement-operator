@@ -1,4 +1,5 @@
-{{- if or .Values.coordinator.enabled .Values.worker.enabled }}
+# TODO Remove?
+{{- if .Values.manager.enabled }}
 {{- if .Values.clusterScoped }}
 apiVersion: v1
 kind: Namespace

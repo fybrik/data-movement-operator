@@ -79,7 +79,7 @@ var _ = BeforeSuite(func(done Done) {
 		logf.Log.Info(pathErr.Error())
 	}
 	testEnv = &envtest.Environment{
-		CRDDirectoryPaths:     []string{filepath.Join(path, "..", "..", "..", "charts", "fybrik-crd", "templates")},
+		CRDDirectoryPaths:     []string{filepath.Join(path, "..", "..", "..", "charts", "data-movement-operator", "files")},
 		ErrorIfCRDPathMissing: true,
 		//AttachControlPlaneOutput: true,
 	}

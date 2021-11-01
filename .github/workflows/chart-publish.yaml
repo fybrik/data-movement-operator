@@ -20,12 +20,8 @@ jobs:
           repository: fybrik/charts
           path: charts-repo
       - run: |
-          rm -rf charts-repo/charts/fybrik-crd
-          rm -rf charts-repo/charts/fybrik
-          rm -rf charts-repo/charts/vault
-          cp -r main/charts/fybrik-crd charts-repo/charts
-          cp -r main/charts/fybrik charts-repo/charts
-          cp -r main/charts/vault charts-repo/charts
+          rm -rf charts-repo/charts/data-movement-operator
+          cp -r main/charts/data-movement-operator charts-repo/charts
       - uses: tibdex/github-app-token@v1
         id: generate-token
         with:

@@ -11,12 +11,10 @@ docker-mirror-read:
 	$(TOOLS_DIR)/docker_mirror.sh $(TOOLS_DIR)/docker_mirror.conf
 
 .PHONY: deploy
-deploy: export VALUES_FILE?=charts/fybrik/values.yaml
+deploy: export VALUES_FILE?=charts/data-movement-operator/values.yaml
 deploy: $(TOOLBIN)/kubectl $(TOOLBIN)/helm
 	$(TOOLBIN)/kubectl create namespace $(KUBE_NAMESPACE) || true
-	$(TOOLBIN)/helm install data-movement-operator-crd charts/fybrik-crd  \
-               --namespace $(KUBE_NAMESPACE) --wait --timeout 120s
-	$(TOOLBIN)/helm install data-movement-operator charts/fybrik --values $(VALUES_FILE) \
+	$(TOOLBIN)/helm install data-movement-operator charts/data-movement-operator --values $(VALUES_FILE) \
                --namespace $(KUBE_NAMESPACE) --wait --timeout 120s
 
 .PHONY: test
@@ -29,7 +27,7 @@ test: $(TOOLBIN)/etcd $(TOOLBIN)/kube-apiserver
 .PHONY: run-integration-tests
 run-integration-tests: export DOCKER_HOSTNAME?=localhost:5000
 run-integration-tests: export DOCKER_NAMESPACE?=fybrik-system
-run-integration-tests: export VALUES_FILE=charts/fybrik/integration-tests.values.yaml
+run-integration-tests: export VALUES_FILE=charts/data-movement-operator/integration-tests.values.yaml
 run-integration-tests:
 	$(MAKE) kind
 	$(MAKE) cluster-prepare
