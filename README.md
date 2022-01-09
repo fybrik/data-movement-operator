@@ -31,6 +31,9 @@ kubectl apply -f https://github.com/fybrik/data-movement-operator/releases/lates
 
 ### Version compatbility matrix
 
+CBM - copy batch module
+CSM - copy stream module
+
 | Fybrik           | CBM     | Mover   | Command
 | ---              | ---     | ---     | ---
 | 0.5.x            | 0.5.x   | 0.5.x   | `https://github.com/fybrik/data-movement-operator/releases/download/v0.5.0/modules/implicit-copy-batch-module.yaml`
