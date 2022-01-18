@@ -6,7 +6,7 @@ metadata:
   name: implicit-copy-stream
   labels:
     name: implicit-copy-stream
-    version: 0.0.0-master
+    version: 0.6.0
 spec:
   type: service
   capabilities:
@@ -28,7 +28,7 @@ spec:
         - name: RedactAction
         - name: RemoveAction
   chart:
-    name: ghcr.io/fybrik/fybrik-implicit-copy-stream:0.0.0-master
+    name: ghcr.io/fybrik/fybrik-implicit-copy-stream:0.6.0
   statusIndicators:
     - kind: StreamTransfer
       successCondition: status.status == SUCCEEDED
