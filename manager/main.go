@@ -5,16 +5,11 @@ package main
 
 import (
 	"flag"
-	"fybrik.io/data-movement-controller/manager/controllers/utils"
 	"os"
 
-	"fybrik.io/data-movement-controller/manager/controllers"
-	"fybrik.io/data-movement-controller/pkg/environment"
-
+	kapps "k8s.io/api/apps/v1"
+	kbatch "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
-
-	"fybrik.io/data-movement-controller/manager/controllers/motion"
-
 	"k8s.io/apimachinery/pkg/fields"
 	kruntime "k8s.io/apimachinery/pkg/runtime"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
@@ -23,8 +18,15 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	motionv1 "fybrik.io/data-movement-controller/manager/apis/motion/v1alpha1"
-	kapps "k8s.io/api/apps/v1"
-	kbatch "k8s.io/api/batch/v1"
+	"fybrik.io/data-movement-controller/manager/controllers"
+	"fybrik.io/data-movement-controller/manager/controllers/motion"
+	"fybrik.io/data-movement-controller/manager/controllers/utils"
+	"fybrik.io/data-movement-controller/pkg/environment"
+)
+
+const (
+	managerPort   = 9443
+	listeningPort = 8085
 )
 
 var (
@@ -39,7 +41,7 @@ func init() {
 	_ = kapps.AddToScheme(scheme)
 }
 
-func run(namespace string, metricsAddr string, enableLeaderElection bool) int {
+func run(namespace, metricsAddr string, enableLeaderElection bool) int {
 	setupLog.Info("creating manager")
 
 	blueprintNamespace := utils.GetBlueprintNamespace()
@@ -72,7 +74,7 @@ func run(namespace string, metricsAddr string, enableLeaderElection bool) int {
 		MetricsBindAddress: metricsAddr,
 		LeaderElection:     enableLeaderElection,
 		LeaderElectionID:   "data-movement-operator-leader-election",
-		Port:               9443,
+		Port:               managerPort,
 		NewCache:           cache.BuilderWithOptions(cache.Options{SelectorsByObject: selectorsByObject}),
 	})
 	if err != nil {
@@ -100,7 +102,7 @@ func main() {
 	var namespace string
 	var metricsAddr string
 	var enableLeaderElection bool
-	address := utils.ListeningAddress(8085)
+	address := utils.ListeningAddress(listeningPort)
 
 	flag.StringVar(&metricsAddr, "metrics-bind-addr", address, "The address the metric endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "leader-elect", false,

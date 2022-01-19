@@ -6,8 +6,7 @@ package motion
 import (
 	"context"
 	"fmt"
-	"fybrik.io/data-movement-controller/manager/controllers"
-	"fybrik.io/data-movement-controller/pkg/environment"
+
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	kerrors "k8s.io/apimachinery/pkg/api/errors"
@@ -16,6 +15,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/controller"
 
 	motionv1 "fybrik.io/data-movement-controller/manager/apis/motion/v1alpha1"
+	"fybrik.io/data-movement-controller/manager/controllers"
+	"fybrik.io/data-movement-controller/pkg/environment"
 )
 
 // StreamTransferReconciler reconciles a StreamTransfer object
@@ -31,6 +32,7 @@ type StreamTransferReconciler struct {
 // if it does not exist (including a persistent checkpoint storage) and otherwise be left running.
 // A more involved version that is handling errors and is discovering crash loops may have to be based
 // on a Pod directly in order to discover errors on a finer granular level.
+//nolint:gocyclo
 func (reconciler *StreamTransferReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := reconciler.Log.WithValues("streamtransfer", req.NamespacedName)
 
@@ -132,7 +134,8 @@ func (reconciler *StreamTransferReconciler) Reconcile(ctx context.Context, req c
 }
 
 func (reconciler *StreamTransferReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	numReconciles := environment.GetEnvAsInt(controllers.StreamTransferConcurrentReconcilesConfiguration, controllers.DefaultStreamTransferConcurrentReconciles)
+	numReconciles := environment.GetEnvAsInt(
+		controllers.StreamTransferConcurrentReconcilesConfiguration, controllers.DefaultStreamTransferConcurrentReconciles)
 
 	return ctrl.NewControllerManagedBy(mgr).
 		WithOptions(controller.Options{MaxConcurrentReconciles: numReconciles}).

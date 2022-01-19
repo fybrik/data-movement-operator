@@ -5,21 +5,21 @@ package motion
 
 import (
 	"context"
+	"encoding/json"
 	"path"
 
-	motionv1 "fybrik.io/data-movement-controller/manager/apis/motion/v1alpha1"
+	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
-	"encoding/json"
-
-	apps "k8s.io/api/apps/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
+
+	motionv1 "fybrik.io/data-movement-controller/manager/apis/motion/v1alpha1"
 )
 
 // Create the deployment for a stream transfer object.
 // This deployment will mount the PVC for the checkpoint directory as well as the secret for the configuration.
+//nolint:funlen
 func (reconciler *StreamTransferReconciler) CreateDeployment(streamTransfer *motionv1.StreamTransfer) error {
 	log := reconciler.Log.WithValues("streamTransfer", streamTransfer.Name)
 	replicas := int32(1)
