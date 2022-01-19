@@ -6,6 +6,7 @@ package motion
 import (
 	"context"
 	"fmt"
+
 	motionv1 "fybrik.io/data-movement-controller/manager/apis/motion/v1alpha1"
 	"fybrik.io/data-movement-controller/manager/controllers"
 	"fybrik.io/data-movement-controller/pkg/environment"
