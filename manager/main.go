@@ -5,8 +5,9 @@ package main
 
 import (
 	"flag"
-	"fybrik.io/data-movement-controller/manager/controllers/utils"
 	"os"
+
+	"fybrik.io/data-movement-controller/manager/controllers/utils"
 
 	"fybrik.io/data-movement-controller/manager/controllers"
 	"fybrik.io/data-movement-controller/pkg/environment"
