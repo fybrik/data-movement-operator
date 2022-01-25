@@ -12,10 +12,10 @@ import (
 )
 
 const (
-	StepNameHashLength       = 10
-	HashPostfixLength        = 5
-	K8sMaxConformNameLength  = 63
-	HelmMaxConformNameLength = 53
+	stepNameHashLength       = 10
+	hashPostfixLength        = 5
+	k8sMaxConformNameLength  = 63
+	helmMaxConformNameLength = 53
 )
 
 // IsDenied returns true if the data access is denied
@@ -67,18 +67,18 @@ func GenerateModuleEndpointFQDN(releaseName, blueprintNamespace string) string {
 // This method shortens the name keeping a prefix and using the last 5 characters of the
 // new name for the hash of the postfix.
 func K8sConformName(name string) string {
-	return ShortenedName(name, K8sMaxConformNameLength, HashPostfixLength)
+	return ShortenedName(name, k8sMaxConformNameLength, hashPostfixLength)
 }
 
 // Helm has stricter restrictions than K8s and restricts release names to 53 characters
 func HelmConformName(name string) string {
-	return ShortenedName(name, HelmMaxConformNameLength, HashPostfixLength)
+	return ShortenedName(name, helmMaxConformNameLength, hashPostfixLength)
 }
 
 // Create a name for a step in a blueprint.
 // Since this is part of the name of a release, this should be done in a central location to make testing easier
 func CreateStepName(moduleName, assetID string) string {
-	return moduleName + "-" + Hash(assetID, StepNameHashLength)
+	return moduleName + "-" + Hash(assetID, stepNameHashLength)
 }
 
 // This function shortens a name to the maximum length given and uses rest of the string that is too long

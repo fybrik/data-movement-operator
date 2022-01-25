@@ -122,6 +122,10 @@ issues:
       linters:
        - dupl
        - revive
+    - path: _test\.go
+      linters:
+      - staticcheck
+      text: "SA1019"
     - path: pkg/test/
       linters:
        - revive
@@ -130,9 +134,7 @@ issues:
     - linters:
       - lll
       source: "^// "
-    - linters:
-      - staticcheck
-      text: "SA1019"
+
 
 run:
   timeout: 5m
