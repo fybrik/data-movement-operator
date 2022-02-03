@@ -89,7 +89,7 @@ fi
 # kubectl apply -f ${WORKING_DIR}/arrow_$moduleResourceVersion_noactions.yaml -n fybrik-system
 
 # apply arrow flight module without actions
-bin/kubectl apply -f test-script/flight-module-$moduleResourceVersion.yaml  -n fybrik-system
+bin/kubectl apply -f $WORKING_DIR/flight-module-$moduleResourceVersion.yaml  -n fybrik-system
 #kubectl apply -f ${WORKING_DIR}/flight.yaml -n fybrik-system
 if [ $module == "stream" ]
 then
