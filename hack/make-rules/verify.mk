@@ -38,48 +38,6 @@ CODE_MAINT += tidy
 tidy:
 	go mod tidy
 
-GOLINT_LINTERS ?= \
-	--disable-all \
-	--enable=deadcode \
-	--enable=dogsled \
-	--enable=dupl \
-	--enable=errcheck \
-	--enable=gocritic \
-	--enable=gofmt \
-	--enable=golint \
-	--enable=gosimple \
-	--enable=govet \
-	--enable=ineffassign \
-	--enable=misspell \
-	--enable=nakedret \
-	--enable=structcheck \
-	--enable=typecheck \
-	--enable=unconvert \
-	--enable=unused \
-	--enable=varcheck \
-	--enable=whitespace
-
-CODE_MAINT += lint
-.PHONY: lint
-lint: $(TOOLBIN)/golangci-lint
-	$(TOOLBIN)/golangci-lint run ${GOLINT_LINTERS} --timeout=5m ./...
-
-.PHONY: lint-fix
-lint-fix: $(TOOLBIN)/golangci-lint
-	$(TOOLBIN)/golangci-lint run --fix ${GOLINT_LINTERS} ./...
-
-.PHONY: lint-todo
-lint-todo: $(TOOLBIN)/golangci-lint
-	$(TOOLBIN)/golangci-lint run --enable=godox ${GOLINT_LINTERS} ./...
-
-.PHONY: misspell
-misspell: $(TOOLBIN)/misspell
-	$(TOOLBIN)/misspell --error ./**
-
-.PHONY: misspell-fix
-misspell-fix: $(TOOLBIN)/misspell
-	$(TOOLBIN)/misspell -w ./**
-
 CODE_MAINT += protos-lint
 .PHONY: protos-lint
 protos-lint: $(TOOLBIN)/protoc $(TOOLBIN)/protoc-gen-lint
