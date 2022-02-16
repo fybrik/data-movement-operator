@@ -20,4 +20,3 @@ jobs:
         with:
           version: latest
           args: --new-from-rev=HEAD~
-          level: warning # GitHub Status Check won't become failure with this level.
