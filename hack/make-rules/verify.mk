@@ -38,6 +38,26 @@ CODE_MAINT += tidy
 tidy:
 	go mod tidy
 
+.PHONY: lint
+lint: $(TOOLBIN)/golangci-lint
+	$(TOOLBIN)/golangci-lint run --timeout=5m ./...
+
+.PHONY: lint-fix
+lint-fix: $(TOOLBIN)/golangci-lint
+	$(TOOLBIN)/golangci-lint run --fix ./...
+
+.PHONY: lint-todo
+lint-todo: $(TOOLBIN)/golangci-lint
+	$(TOOLBIN)/golangci-lint run --enable=godox ./...
+
+.PHONY: misspell
+misspell: $(TOOLBIN)/misspell
+	$(TOOLBIN)/misspell --error ./**
+
+.PHONY: misspell-fix
+misspell-fix: $(TOOLBIN)/misspell
+	$(TOOLBIN)/misspell -w ./**
+
 CODE_MAINT += protos-lint
 .PHONY: protos-lint
 protos-lint: $(TOOLBIN)/protoc $(TOOLBIN)/protoc-gen-lint
