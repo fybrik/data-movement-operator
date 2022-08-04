@@ -4,7 +4,15 @@ on:
     inputs:
       kind-version:
         required: true
-        default: 'kind20'
+        default: 'kind22'
+        type: choice
+        options:
+        - kind19
+        - kind20
+        - kind21
+        - kind22
+        - kind23
+        - kind24
       fybrik-version:
         required: true
         default: '1.0.1'
